@@ -1,12 +1,34 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const { utils } = require("ethers");
 
 describe("SnakeCoin", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const SnakeCoin = await ethers.getContractFactory("SnakeCoin");
-    const snakeCoin = await SnakeCoin.deploy();
-    await snakeCoin.deployed();
+  let contract;
+  let owner;
+  let address1;
+  
+  before(async function () {
+    [owner, address1] = await ethers.getSigners();
+  });
 
-    //expect(await greeter.greet()).to.equal("Hola, mundo!");
+  beforeEach(async function () {
+      const SnakeCoinFactory = await ethers.getContractFactory("SnakeCoin");
+
+      contract = await SnakeCoinFactory.deploy();
+      contract = await contract.deployed();
+  });
+
+  it("should have the correct name and symbol", async function () {
+      const name = await contract.name();
+      const symbol = await contract.symbol();
+
+      expect(name).to.equal("SnakeCoin");
+      expect(symbol).to.equal("SCN");
+  });
+
+  it("should charge fees", async function () {
+    await contract.connect(owner).transfer(address1.address, utils.parseEther("1000").toString());
+    const address1Balance = await contract.balanceOf(address1.address);
+    expect(address1Balance).to.equal(utils.parseEther("1000").toString());
   });
 });

@@ -4,6 +4,11 @@
   "description": "Crypto Snake Contracts",
   "author": "Andre Ferreira",
   "license": "MIT",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js --network local",
+    "test": "hardhat test --network local"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
