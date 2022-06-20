@@ -1,5 +1,10 @@
 # Crypto Snake Contracts
 
+* Token ERC20 ✅
+* NFT ERC721A
+
+# Usage
+
 Test
 ```
 npm run test
